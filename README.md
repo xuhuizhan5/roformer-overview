@@ -43,7 +43,7 @@ RoFormer's key innovation is the introduction of Rotary Position Embeddings (RoP
   - Decaying inter-token dependency with increasing relative distances, reflecting the intuition that tokens further apart should have a lesser connection.
   - Capability to equip linear self-attention with relative position encoding, enhancing efficiency and interpretability.
 
-### Implementation of RoPE:
+## Implementation of RoPE
 
 **Let' s start from 2D:**
 
@@ -96,7 +96,7 @@ $$
 
 ![image 1](./images/2.png)
 
-### Illustration of Roformer implemenation:
+### Illustration of RoPE implementation:
 
 ![image 1](./images/3.png)
 
