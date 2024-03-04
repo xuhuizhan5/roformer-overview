@@ -96,7 +96,7 @@ $$
 
 ![image 1](./images/2.png)
 
-### Implementation of RoPE:
+### Illustration of Roformer implemenation:
 
 ![image 1](./images/3.png)
 
