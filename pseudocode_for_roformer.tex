@@ -1,0 +1,56 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb}
+
+\begin{document}
+
+\title{Pseudo code for Roformer}
+\author{Xuhui Zhan}
+\maketitle
+
+\section*{Algorithm with RoPE: $P \leftarrow DTransformerRoPE(x|\theta)$}
+
+\textit{/* GPT, a decoder-only transformer, applied RoPE, forward pass */}
+
+\textbf{Input}: $x \in V^{*}$, a sequence of token IDs.
+
+\textbf{Output}: $P \in (0, 1)^{N_V \times \text{length}(x)}$, where the $t$-th column of $P$ represents $\hat{P}_{\theta}(x[t+1]|x[1:t])$.
+
+\textbf{Hyperparameters}:$L$, $D$, $d_e$, $d_{mlp} \in \mathbb{N}$, $R_e$ the pre-defiend rotary matrix
+
+\textbf{Parameters}: $\theta$ includes all of the following parameters:
+\begin{itemize}
+  \item $W_e \in \mathbb{R}^{d_e \times N_V}$ the token embedding matrices.
+  \item For $l \in [L]$:
+  \begin{itemize}
+    \item $W_{l}$, multi-head attention parameters for layer $l$ 
+    \item $ \gamma_{l}^{1}, \beta_{l}^{1}, \gamma_{l}^{2}, \beta_{l}^{2} \in \mathbb{R}^{d_e}$, two sets of layer-norm parameters,
+    \item $W_{mlp1}^{l} \in \mathbb{R}^{d_{mlp} \times d_e}$, $b_{mlp1}^{l} \in \mathbb{R}^{d_{mlp}}$, $W_{mlp2}^{l} \in \mathbb{R}^{d_e \times d_{mlp}}$, $b_{mlp2}^{l} \in \mathbb{R}^{d_e}$, MLP parameters.
+  \end{itemize}
+  \item $\gamma, \beta \in \mathbb{R}^{d_e}$, final layer-norm parameters.
+  \item $W_u \in \mathbb{R}^{N_V \times d_e}$, the unembedding matrix.
+\end{itemize}
+
+$\ell \leftarrow \text{length}(x)$
+
+\textbf{for} $t \in [\ell]$: $e_t \leftarrow R_e(t)W_e[:,x[t]]$
+
+$X \leftarrow [e_1, e_2, \dots, e_l]$
+
+\textbf{for} $l = 1, 2, \dots, L$ \textbf{do}
+
+\quad \textbf{for} $t \in [\ell]$: $\tilde{X}[:,t] \leftarrow \text{layer\_norm}(X[:,t]|\gamma_{l}^{1},\beta_{l}^{1})$
+
+\quad $X \leftarrow X + \text{MHAttention}(\tilde{X}|W_l,\text{Mask}[t,t'] = [[t \leq t']])$
+
+\quad \textbf{for} $t \in [\ell]$: $\tilde{X}[:,t] \leftarrow \text{layer\_norm}(X[:,t]|\gamma_{l}^{2},\beta_{l}^{2})$
+
+\quad $X \leftarrow X + \text{W}^{l}_{mlp2}\text{GELU}(\text{W}^{l}_{mlp1}\tilde{X} + b_{mlp1}^l1^{\top}) + b_{mlp2}1^{\top}$
+
+\textbf{end}
+
+\textbf{for} $t \in [\ell]$: $X[:,t] \leftarrow \text{layer\_norm}(X[:,t]|\gamma,\beta)$
+
+\textbf{return} $P = \text{softmax}(W_uX)$
+
+
+\end{document}
