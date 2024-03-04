@@ -94,6 +94,8 @@ $$
 
 #### General form for rotary matrix:
 
+![image 1](./images/2.png)
+
 ### Implementation of RoPE:
 
 ![image 1](./images/3.png)
