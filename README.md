@@ -94,8 +94,6 @@ $$
 
 #### General form for rotary matrix:
 
-### ![image 1](./images/2.png)
-
 ### Implementation of RoPE:
 
 ![image 1](./images/3.png)
@@ -104,13 +102,13 @@ $$
 
 ### Illustration of influence of RoPE in attention mechanism
 
-To illustrate how attention computation with Rotary Position Embeddings (RoPE) makes the dot product influenced by relative positions, let's consider an extreme example with a simplified setup. Assume we have a sequence of two tokens, A and B, with their respective embeddings xA*x**A* and xB*x**B*, and we want to compute the attention that A pays to B.
+To illustrate how attention computation with Rotary Position Embeddings (RoPE) makes the dot product influenced by relative positions, let's consider an extreme example with a simplified setup. Assume we have a sequence of two tokens, A and B, with their respective embeddings **xA** and **xB**, and we want to compute the attention that A pays to B.
 
-In a traditional attention mechanism without positional encoding, the relevance (attention weight) between two tokens is computed based on the dot product of their embeddings. If xA*x**A* and xB*x**B* are similar, the dot product xA⋅xB*x**A*⋅*x**B* will be high, indicating high relevance.
+In a traditional attention mechanism without positional encoding, the relevance (attention weight) between two tokens is computed based on the dot product of their embeddings. If **xA** and **xB** are similar, the dot product **xA⋅xB** will be high, indicating high relevance.
 
 Now, let's introduce RoPE and see how it changes the scenario:
 
-1. **Without Rotation (Traditional Attention)**: Assume xA*x**A* and xB*x**B* are identical (for simplicity, let's say both are **[1, 0]** in a 2D embedding space). The dot product without rotation is **xA⋅xB=1**, indicating **high similarity or relevance.**
+1. **Without Rotation (Traditional Attention)**: Assume **xA** and **xB** are identical (for simplicity, let's say both are **[1, 0]** in a 2D embedding space). The dot product without rotation is **xA⋅xB=1**, indicating **high similarity or relevance.**
 2. **With Rotation (RoPE)**: RoPE introduces a rotation based on the position of each token. Let's say the rotation angle for position 1 (token A) is 0 degrees (no rotation), and for position 2 (token B), it's 90 degrees for the sake of an extreme example.
 
    The rotation matrix for a 90 degrees rotation in 2D is:
