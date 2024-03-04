@@ -145,6 +145,7 @@ Check the file **"pseudocode_for_roformer.pdf"** in the repo.
 - Unmentioned about the learnable positional embedding matrix, are they completed abandoned?
 - Is it possible to apply rotation matrix on positional embedding? (As a combination of both)
 - Is it possible to use other number or function when calculating the frequency?
+- Make the rotary matrix trainable? (Instead of rotated on two dimensions, train on the 0s)
 
 ## Integration and Accessibility
 
